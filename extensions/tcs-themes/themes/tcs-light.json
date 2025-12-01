@@ -1,0 +1,21 @@
+{
+	"name": "TCS Light",
+	"type": "light",
+	"colors": {
+		"activityBar.background": "#f3f3f3",
+		"activityBar.foreground": "#000000",
+		"statusBar.background": "#0078d4",
+		"statusBar.foreground": "#ffffff",
+		"titleBar.activeBackground": "#ffffff",
+		"titleBar.activeForeground": "#333333",
+		"editor.background": "#ffffff",
+		"editor.foreground": "#000000"
+	},
+	"tokenColors": [
+		{
+			"settings": {
+				"foreground": "#000000"
+			}
+		}
+	]
+}

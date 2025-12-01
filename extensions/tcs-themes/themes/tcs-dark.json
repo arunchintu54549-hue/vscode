@@ -1,0 +1,21 @@
+{
+	"name": "TCS Dark",
+	"type": "dark",
+	"colors": {
+		"activityBar.background": "#252526",
+		"activityBar.foreground": "#ffffff",
+		"statusBar.background": "#0078d4",
+		"statusBar.foreground": "#ffffff",
+		"titleBar.activeBackground": "#1e1e1e",
+		"titleBar.activeForeground": "#ffffff",
+		"editor.background": "#1e1e1e",
+		"editor.foreground": "#d4d4d4"
+	},
+	"tokenColors": [
+		{
+			"settings": {
+				"foreground": "#d4d4d4"
+			}
+		}
+	]
+}

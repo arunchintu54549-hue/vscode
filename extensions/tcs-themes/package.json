@@ -1,0 +1,29 @@
+{
+	"name": "tcs-themes",
+	"displayName": "TCS Themes",
+	"description": "TCS Color Themes for VS Code",
+	"version": "1.0.0",
+	"publisher": "tcs",
+	"engines": {
+		"vscode": "*"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"id": "TCS Dark",
+				"label": "TCS Dark",
+				"uiTheme": "vs-dark",
+				"path": "./themes/tcs-dark.json"
+			},
+			{
+				"id": "TCS Light",
+				"label": "TCS Light",
+				"uiTheme": "vs",
+				"path": "./themes/tcs-light.json"
+			}
+		]
+	}
+}
