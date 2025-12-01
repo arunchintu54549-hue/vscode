@@ -8,16 +8,11 @@
   "engines": {
     "vscode": "*"
   },
-  "categories": ["Themes"],
+  "categories": [
+    "Themes"
+  ],
   "contributes": {
-    "themes": [
-      {
-        "id": "Quiet Light",
-        "label": "%themeLabel%",
-        "uiTheme": "vs",
-        "path": "./themes/quietlight-color-theme.json"
-      }
-    ]
+    "themes": []
   },
   "repository": {
     "type": "git",

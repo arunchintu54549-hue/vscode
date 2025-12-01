@@ -8,16 +8,11 @@
   "engines": {
     "vscode": "*"
   },
-  "categories": ["Themes"],
+  "categories": [
+    "Themes"
+  ],
   "contributes": {
-    "themes": [
-      {
-        "id": "Monokai Dimmed",
-        "label": "%themeLabel%",
-        "uiTheme": "vs-dark",
-        "path": "./themes/dimmed-monokai-color-theme.json"
-      }
-    ]
+    "themes": []
   },
   "repository": {
     "type": "git",
