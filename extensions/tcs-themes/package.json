@@ -23,6 +23,36 @@
 				"label": "TCS Light",
 				"uiTheme": "vs",
 				"path": "./themes/tcs-light.json"
+			},
+			{
+				"id": "TCS Blue",
+				"label": "TCS Blue",
+				"uiTheme": "vs-dark",
+				"path": "./themes/tcs-blue.json"
+			},
+			{
+				"id": "TCS Green",
+				"label": "TCS Green",
+				"uiTheme": "vs-dark",
+				"path": "./themes/tcs-green.json"
+			},
+			{
+				"id": "TCS Red",
+				"label": "TCS Red",
+				"uiTheme": "vs-dark",
+				"path": "./themes/tcs-red.json"
+			},
+			{
+				"id": "TCS Purple",
+				"label": "TCS Purple",
+				"uiTheme": "vs-dark",
+				"path": "./themes/tcs-purple.json"
+			},
+			{
+				"id": "TCS Orange",
+				"label": "TCS Orange",
+				"uiTheme": "vs-dark",
+				"path": "./themes/tcs-orange.json"
 			}
 		]
 	}

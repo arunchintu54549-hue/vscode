@@ -9,7 +9,26 @@
 		"titleBar.activeBackground": "#1e1e1e",
 		"titleBar.activeForeground": "#ffffff",
 		"editor.background": "#1e1e1e",
-		"editor.foreground": "#d4d4d4"
+		"editor.foreground": "#d4d4d4",
+		"sideBar.background": "#252526",
+		"sideBar.foreground": "#d4d4d4",
+		"sideBarSectionHeader.background": "#37373d",
+		"sideBarSectionHeader.foreground": "#d4d4d4",
+		"sideBarTitle.foreground": "#d4d4d4",
+		"input.background": "#3c3c3c",
+		"input.foreground": "#d4d4d4",
+		"input.border": "#3c3c3c",
+		"inputOption.activeBorder": "#0078d4",
+		"chat.requestBackground": "#252526",
+		"chat.requestBorder": "#333333",
+		"chat.requestBubbleBackground": "#252526",
+		"chat.requestBubbleHoverBackground": "#2d2d2d",
+		"chat.slashCommandBackground": "#0078d4",
+		"chat.slashCommandForeground": "#ffffff",
+		"chat.avatarBackground": "#0078d4",
+		"chat.avatarForeground": "#ffffff",
+		"chat.editedFileForeground": "#E2C08D",
+		"chat.requestCodeBorder": "#333333"
 	},
 	"tokenColors": [
 		{

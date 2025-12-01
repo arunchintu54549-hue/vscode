@@ -1,0 +1,40 @@
+{
+	"name": "TCS Orange",
+	"type": "dark",
+	"colors": {
+		"activityBar.background": "#cc5500",
+		"activityBar.foreground": "#ffffff",
+		"statusBar.background": "#e67300",
+		"statusBar.foreground": "#ffffff",
+		"titleBar.activeBackground": "#994400",
+		"titleBar.activeForeground": "#ffffff",
+		"editor.background": "#331a00",
+		"editor.foreground": "#d4d4d4",
+		"sideBar.background": "#4d2600",
+		"sideBar.foreground": "#d4d4d4",
+		"sideBarSectionHeader.background": "#994400",
+		"sideBarSectionHeader.foreground": "#d4d4d4",
+		"sideBarTitle.foreground": "#d4d4d4",
+		"input.background": "#994400",
+		"input.foreground": "#d4d4d4",
+		"input.border": "#cc5500",
+		"inputOption.activeBorder": "#e67300",
+		"chat.requestBackground": "#4d2600",
+		"chat.requestBorder": "#cc5500",
+		"chat.requestBubbleBackground": "#4d2600",
+		"chat.requestBubbleHoverBackground": "#994400",
+		"chat.slashCommandBackground": "#e67300",
+		"chat.slashCommandForeground": "#ffffff",
+		"chat.avatarBackground": "#e67300",
+		"chat.avatarForeground": "#ffffff",
+		"chat.editedFileForeground": "#E2C08D",
+		"chat.requestCodeBorder": "#cc5500"
+	},
+	"tokenColors": [
+		{
+			"settings": {
+				"foreground": "#d4d4d4"
+			}
+		}
+	]
+}

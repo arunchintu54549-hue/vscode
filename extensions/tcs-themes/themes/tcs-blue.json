@@ -1,0 +1,40 @@
+{
+	"name": "TCS Blue",
+	"type": "dark",
+	"colors": {
+		"activityBar.background": "#003366",
+		"activityBar.foreground": "#ffffff",
+		"statusBar.background": "#004488",
+		"statusBar.foreground": "#ffffff",
+		"titleBar.activeBackground": "#002244",
+		"titleBar.activeForeground": "#ffffff",
+		"editor.background": "#001122",
+		"editor.foreground": "#d4d4d4",
+		"sideBar.background": "#001a33",
+		"sideBar.foreground": "#d4d4d4",
+		"sideBarSectionHeader.background": "#002244",
+		"sideBarSectionHeader.foreground": "#d4d4d4",
+		"sideBarTitle.foreground": "#d4d4d4",
+		"input.background": "#002244",
+		"input.foreground": "#d4d4d4",
+		"input.border": "#003366",
+		"inputOption.activeBorder": "#004488",
+		"chat.requestBackground": "#001a33",
+		"chat.requestBorder": "#003366",
+		"chat.requestBubbleBackground": "#001a33",
+		"chat.requestBubbleHoverBackground": "#002244",
+		"chat.slashCommandBackground": "#004488",
+		"chat.slashCommandForeground": "#ffffff",
+		"chat.avatarBackground": "#004488",
+		"chat.avatarForeground": "#ffffff",
+		"chat.editedFileForeground": "#E2C08D",
+		"chat.requestCodeBorder": "#003366"
+	},
+	"tokenColors": [
+		{
+			"settings": {
+				"foreground": "#d4d4d4"
+			}
+		}
+	]
+}

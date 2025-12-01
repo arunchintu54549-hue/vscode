@@ -1,0 +1,40 @@
+{
+	"name": "TCS Green",
+	"type": "dark",
+	"colors": {
+		"activityBar.background": "#004d00",
+		"activityBar.foreground": "#ffffff",
+		"statusBar.background": "#006600",
+		"statusBar.foreground": "#ffffff",
+		"titleBar.activeBackground": "#003300",
+		"titleBar.activeForeground": "#ffffff",
+		"editor.background": "#001a00",
+		"editor.foreground": "#d4d4d4",
+		"sideBar.background": "#002600",
+		"sideBar.foreground": "#d4d4d4",
+		"sideBarSectionHeader.background": "#003300",
+		"sideBarSectionHeader.foreground": "#d4d4d4",
+		"sideBarTitle.foreground": "#d4d4d4",
+		"input.background": "#003300",
+		"input.foreground": "#d4d4d4",
+		"input.border": "#004d00",
+		"inputOption.activeBorder": "#006600",
+		"chat.requestBackground": "#002600",
+		"chat.requestBorder": "#004d00",
+		"chat.requestBubbleBackground": "#002600",
+		"chat.requestBubbleHoverBackground": "#003300",
+		"chat.slashCommandBackground": "#006600",
+		"chat.slashCommandForeground": "#ffffff",
+		"chat.avatarBackground": "#006600",
+		"chat.avatarForeground": "#ffffff",
+		"chat.editedFileForeground": "#E2C08D",
+		"chat.requestCodeBorder": "#004d00"
+	},
+	"tokenColors": [
+		{
+			"settings": {
+				"foreground": "#d4d4d4"
+			}
+		}
+	]
+}
