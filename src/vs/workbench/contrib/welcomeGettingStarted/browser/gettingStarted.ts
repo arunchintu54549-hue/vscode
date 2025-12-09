@@ -56,6 +56,7 @@ import { EditorPane } from '../../../browser/parts/editor/editorPane.js';
 import { WorkbenchStateContext } from '../../../common/contextkeys.js';
 import { IEditorOpenContext, IEditorSerializer } from '../../../common/editor.js';
 import { IWebviewElement, IWebviewService } from '../../webview/browser/webview.js';
+import { TCSQuickActions } from '../../../browser/parts/editor/tcsQuickActions.js';
 import './gettingStartedColors.js';
 import { GettingStartedDetailsRenderer } from './gettingStartedDetailsRenderer.js';
 import { gettingStartedCheckedCodicon, gettingStartedUncheckedCodicon } from './gettingStartedIcons.js';
@@ -956,7 +957,9 @@ export class GettingStartedPage extends EditorPane {
 		gettingStartedList.onDidChange(layoutLists);
 		layoutLists();
 
-		reset(this.categoriesSlide, $('.gettingStartedCategoriesContainer', {}, header, leftColumn, rightColumn, footer,));
+		const quickActions = this.buildQuickActions();
+
+		reset(this.categoriesSlide, $('.gettingStartedCategoriesContainer.tcs-simplified-view', {}, header, quickActions));
 		this.categoriesPageScrollbar?.scanDomNode();
 
 		this.updateCategoryProgress();
@@ -1086,6 +1089,13 @@ export class GettingStartedPage extends EditorPane {
 		}).catch(onUnexpectedError);
 
 		return recentlyOpenedList;
+	}
+
+	private buildQuickActions(): HTMLElement {
+		const container = $('.tcs-quick-actions-container');
+		const quickActions = new TCSQuickActions(this.commandService);
+		quickActions.render(container);
+		return container;
 	}
 
 	private buildStartList(): GettingStartedIndexList<IWelcomePageStartEntry> {

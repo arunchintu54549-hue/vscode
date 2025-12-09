@@ -9,13 +9,15 @@ import { coalesce, shuffle } from '../../../../base/common/arrays.js';
 import { Disposable, DisposableStore } from '../../../../base/common/lifecycle.js';
 import { isMacintosh, isWeb, OS } from '../../../../base/common/platform.js';
 import { localize } from '../../../../nls.js';
-import { CommandsRegistry } from '../../../../platform/commands/common/commands.js';
+import { CommandsRegistry, ICommandService } from '../../../../platform/commands/common/commands.js';
 import { IConfigurationService } from '../../../../platform/configuration/common/configuration.js';
 import { ContextKeyExpr, ContextKeyExpression, IContextKeyService } from '../../../../platform/contextkey/common/contextkey.js';
 import { IKeybindingService } from '../../../../platform/keybinding/common/keybinding.js';
 import { IStorageService, StorageScope, StorageTarget, WillSaveStateReason } from '../../../../platform/storage/common/storage.js';
 import { defaultKeybindingLabelStyles } from '../../../../platform/theme/browser/defaultStyles.js';
 import { IWorkspaceContextService, WorkbenchState } from '../../../../platform/workspace/common/workspace.js';
+import { TCSQuickActions } from './tcsQuickActions.js';
+import { IEditorService } from '../../../services/editor/common/editorService.js';
 
 interface WatermarkEntry {
 	readonly id: string;
@@ -74,6 +76,7 @@ export class EditorGroupWatermark extends Disposable {
 	private readonly cachedWhen: { [when: string]: boolean };
 
 	private readonly shortcuts: HTMLElement;
+	private readonly quickActionsContainer: HTMLElement;
 	private readonly transientDisposables = this._register(new DisposableStore());
 	private readonly keybindingLabels = this._register(new DisposableStore());
 
@@ -86,7 +89,9 @@ export class EditorGroupWatermark extends Disposable {
 		@IWorkspaceContextService private readonly contextService: IWorkspaceContextService,
 		@IContextKeyService private readonly contextKeyService: IContextKeyService,
 		@IConfigurationService private readonly configurationService: IConfigurationService,
-		@IStorageService private readonly storageService: IStorageService
+		@IStorageService private readonly storageService: IStorageService,
+		@ICommandService private readonly commandService: ICommandService,
+		@IEditorService private readonly editorService: IEditorService
 	) {
 		super();
 
@@ -96,12 +101,14 @@ export class EditorGroupWatermark extends Disposable {
 		const elements = h('.editor-group-watermark', [
 			h('.watermark-container', [
 				h('.letterpress'),
+				h('.tcs-quick-actions-container@quickActionsContainer'),
 				h('.shortcuts@shortcuts'),
 			])
 		]);
 
 		append(container, elements.root);
 		this.shortcuts = elements.shortcuts;
+		this.quickActionsContainer = elements.quickActionsContainer;
 
 		this.registerListeners();
 
@@ -125,6 +132,15 @@ export class EditorGroupWatermark extends Disposable {
 			}
 		}));
 
+		// Listen to editor changes to update quick actions visibility
+		this._register(this.editorService.onDidActiveEditorChange(() => {
+			this.render();
+		}));
+
+		this._register(this.contextService.onDidChangeWorkspaceFolders(() => {
+			this.render();
+		}));
+
 		this._register(this.storageService.onWillSaveState(e => {
 			if (e.reason === WillSaveStateReason.SHUTDOWN) {
 				const entries = [...emptyWindowEntries, ...workspaceEntries, ...otherEntries];
@@ -143,8 +159,22 @@ export class EditorGroupWatermark extends Disposable {
 	private render(): void {
 		this.enabled = this.configurationService.getValue<boolean>(EditorGroupWatermark.SETTINGS_KEY);
 
+		// Clear quick actions container
+		clearNode(this.quickActionsContainer);
+
+		// Clear shortcuts
 		clearNode(this.shortcuts);
 		this.transientDisposables.clear();
+
+		// If no active editor and workspace is not open, show the quick actions panel
+		if (!this.editorService.activeEditor && !this.contextService.getWorkspace().folders.length) {
+			// Create and render quick actions
+			const quickActions = new TCSQuickActions(this.commandService);
+			quickActions.render(this.quickActionsContainer);
+
+			// Don't show default shortcuts when showing quick actions
+			return;
+		}
 
 		if (!this.enabled) {
 			return;

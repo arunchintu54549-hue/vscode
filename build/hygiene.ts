@@ -242,7 +242,7 @@ function createGitIndexVinyls(paths: string[]): Promise<VinylFile[]> {
 
 				cp.exec(
 					process.platform === 'win32' ? `git show :${relativePath}` : `git show ':${relativePath}'`,
-					{ maxBuffer: stat.size, encoding: 'buffer' },
+					{ maxBuffer: 1024 * 1024 * 20, encoding: 'buffer' }, // Increase maxBuffer to 20MB
 					(err, out) => {
 						if (err) {
 							return e(err);

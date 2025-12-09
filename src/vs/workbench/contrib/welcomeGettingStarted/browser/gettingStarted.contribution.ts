@@ -31,6 +31,12 @@ import { Categories } from '../../../../platform/action/common/actionCommonCateg
 import { DisposableStore } from '../../../../base/common/lifecycle.js';
 import { AccessibleViewRegistry } from '../../../../platform/accessibility/browser/accessibleViewRegistry.js';
 import { GettingStartedAccessibleView } from './gettingStartedAccessibleView.js';
+import { INotificationService } from '../../../../platform/notification/common/notification.js';
+import { IFileService } from '../../../../platform/files/common/files.js';
+import { IFileDialogService } from '../../../../platform/dialogs/common/dialogs.js';
+import { VSBuffer } from '../../../../base/common/buffer.js';
+import { IHostService } from '../../../services/host/browser/host.js';
+import { joinPath } from '../../../../base/common/resources.js';
 
 export * as icons from './gettingStartedIcons.js';
 
@@ -256,6 +262,77 @@ CommandsRegistry.registerCommand({
 	}
 });
 
+CommandsRegistry.registerCommand({
+	id: 'tcs.aiWorkspace.create',
+	handler: async (accessor) => {
+		const quickInputService = accessor.get(IQuickInputService);
+		const fileService = accessor.get(IFileService);
+		const fileDialogService = accessor.get(IFileDialogService);
+		const hostService = accessor.get(IHostService);
+		const notificationService = accessor.get(INotificationService);
+
+		// 1. Ask for Workspace Name
+		const workspaceName = await quickInputService.input({
+			prompt: 'Enter a name for your AI Workspace',
+			placeHolder: 'MyAIProject'
+		});
+
+		if (!workspaceName) {
+			return; // User cancelled
+		}
+
+		// 2. Ask for Parent Folder
+		// We use showOpenDialog to pick the parent folder
+		const parentFolderUri = await fileDialogService.showOpenDialog({
+			title: 'Select Parent Folder',
+			canSelectFiles: false,
+			canSelectFolders: true,
+			canSelectMany: false,
+			openLabel: 'Select as Parent'
+		});
+
+		if (!parentFolderUri || parentFolderUri.length === 0) {
+			return; // User cancelled
+		}
+
+		const rootUri = joinPath(parentFolderUri[0], workspaceName);
+
+		try {
+			// 3. Create the Workspace Folder
+			await fileService.createFolder(rootUri);
+
+			// 4. Create Defaults
+			const readmeContent = `# ${workspaceName}\n\n${localize('readmeWelcome', "Welcome to your new AI-powered workspace!")}\n\n${localize('readmeInitialized', "This project was initialized with TCSCode.")}`;
+			await fileService.createFile(joinPath(rootUri, 'README.md'), VSBuffer.fromString(readmeContent));
+
+			const aiJsonContent = JSON.stringify({
+				project: workspaceName,
+				mode: localize('aiJsonMode', "semantic-search"),
+				indexing: localize('aiJsonIndexing', "auto")
+			}, null, 2);
+			await fileService.createFile(joinPath(rootUri, 'ai.json'), VSBuffer.fromString(aiJsonContent));
+
+			// .tcs folder
+			const tcsFolderUri = joinPath(rootUri, '.tcs');
+			await fileService.createFolder(tcsFolderUri);
+
+			const settingsJsonContent = JSON.stringify({
+				"ai.autoSuggest": true,
+				"tcs.theme": localize('tcsThemeValue', "dark-modern")
+			}, null, 2);
+			await fileService.createFile(joinPath(tcsFolderUri, 'settings.json'), VSBuffer.fromString(settingsJsonContent));
+
+			// 5. Open the Folder
+			await hostService.openWindow([{ folderUri: rootUri }], { forceNewWindow: false });
+
+			notificationService.info(localize('aiWorkspaceCreated', "AI Workspace '{0}' created successfully.", workspaceName));
+
+		} catch (error) {
+			notificationService.error(localize('aiWorkspaceFailed', "Failed to create AI Workspace: {0}", error));
+		}
+	}
+});
+
 export const WorkspacePlatform = new RawContextKey<'mac' | 'linux' | 'windows' | 'webworker' | undefined>('workspacePlatform', undefined, localize('workspacePlatform', "The platform of the current workspace, which in remote or serverless contexts may be different from the platform of the UI"));
 class WorkspacePlatformContribution {
 
@@ -333,4 +410,3 @@ registerWorkbenchContribution2(StartupPageEditorResolverContribution.ID, Startup
 registerWorkbenchContribution2(StartupPageRunnerContribution.ID, StartupPageRunnerContribution, WorkbenchPhase.AfterRestored);
 
 AccessibleViewRegistry.register(new GettingStartedAccessibleView());
-
