@@ -5,6 +5,7 @@
 
 import { ILocalizedString, localize, localize2 } from '../../../nls.js';
 import { MenuId, MenuRegistry, registerAction2, Action2 } from '../../../platform/actions/common/actions.js';
+import { AppResourcePath, FileAccess } from '../../../base/common/network.js';
 import { Categories } from '../../../platform/action/common/actionCommonCategories.js';
 import { IConfigurationService } from '../../../platform/configuration/common/configuration.js';
 import { alert } from '../../../base/browser/ui/aria/aria.js';
@@ -168,11 +169,15 @@ export class ToggleSidebarPositionAction extends Action2 {
 
 registerAction2(ToggleSidebarPositionAction);
 
-const configureLayoutIcon = registerIcon('configure-layout-icon', Codicon.layout, localize('cofigureLayoutIcon', 'Icon represents workbench layout configuration.'));
+
+
+const layoutIconUri = FileAccess.asBrowserUri('layout.png' as AppResourcePath);
+const layoutIcon = { dark: layoutIconUri, light: layoutIconUri };
+
 MenuRegistry.appendMenuItem(MenuId.LayoutControlMenu, {
 	submenu: MenuId.LayoutControlMenuSubmenu,
 	title: localize('configureLayout', "Configure Layout"),
-	icon: configureLayoutIcon,
+	icon: layoutIcon,
 	group: '1_workbench_layout',
 	when: ContextKeyExpr.and(
 		IsAuxiliaryWindowContext.negate(),
@@ -1448,7 +1453,7 @@ registerAction2(class CustomizeLayoutAction extends Action2 {
 			id: 'workbench.action.customizeLayout',
 			title: localize2('customizeLayout', "Customize Layout..."),
 			f1: true,
-			icon: configureLayoutIcon,
+			icon: layoutIcon,
 			menu: [
 				{
 					id: MenuId.LayoutControlMenuSubmenu,

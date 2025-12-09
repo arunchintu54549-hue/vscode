@@ -235,3 +235,21 @@ MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
 	icon: Codicon.shield,
 	order: 101,
 });
+
+MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
+	command: {
+		id: 'workbench.action.terminal.toggleTerminal',
+		title: localize('toggleTerminal', "Toggle Terminal"),
+		icon: Codicon.terminal,
+	},
+	order: 102,
+});
+
+MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
+	command: {
+		id: 'workbench.action.openWalkthrough',
+		title: localize('help', "Help"),
+		icon: Codicon.question,
+	},
+	order: 103,
+});

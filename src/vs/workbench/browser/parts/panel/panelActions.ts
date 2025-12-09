@@ -11,6 +11,7 @@ import { Categories } from '../../../../platform/action/common/actionCommonCateg
 import { isHorizontal, IWorkbenchLayoutService, PanelAlignment, Parts, Position, positionToString } from '../../../services/layout/browser/layoutService.js';
 import { IsAuxiliaryWindowContext, PanelAlignmentContext, PanelMaximizedContext, PanelPositionContext, PanelVisibleContext } from '../../../common/contextkeys.js';
 import { ContextKeyExpr, ContextKeyExpression } from '../../../../platform/contextkey/common/contextkey.js';
+import { AppResourcePath, FileAccess } from '../../../../base/common/network.js';
 import { Codicon } from '../../../../base/common/codicons.js';
 import { registerIcon } from '../../../../platform/theme/common/iconRegistry.js';
 import { ServicesAccessor } from '../../../../editor/browser/editorExtensions.js';
@@ -24,8 +25,9 @@ import { SwitchCompositeViewAction } from '../compositeBarActions.js';
 
 const maximizeIcon = registerIcon('panel-maximize', Codicon.screenFull, localize('maximizeIcon', 'Icon to maximize a panel.'));
 export const closeIcon = registerIcon('panel-close', Codicon.close, localize('closeIcon', 'Icon to close a panel.'));
-const panelIcon = registerIcon('panel-layout-icon', Codicon.layoutPanel, localize('togglePanelOffIcon', 'Icon to toggle the panel off when it is on.'));
-const panelOffIcon = registerIcon('panel-layout-icon-off', Codicon.layoutPanelOff, localize('togglePanelOnIcon', 'Icon to toggle the panel on when it is off.'));
+
+const terminalIconUri = FileAccess.asBrowserUri('terminal.png' as AppResourcePath);
+const terminalIcon = { dark: terminalIconUri, light: terminalIconUri };
 
 export class TogglePanelAction extends Action2 {
 
@@ -322,8 +324,8 @@ MenuRegistry.appendMenuItems([
 			command: {
 				id: TogglePanelAction.ID,
 				title: localize('togglePanel', "Toggle Panel"),
-				icon: panelOffIcon,
-				toggled: { condition: PanelVisibleContext, icon: panelIcon }
+				icon: terminalIcon,
+				toggled: { condition: PanelVisibleContext, icon: terminalIcon }
 			},
 			when:
 				ContextKeyExpr.and(

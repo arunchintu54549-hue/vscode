@@ -8,7 +8,7 @@ import { localize, localize2 } from '../../../../nls.js';
 import { MultiWindowParts, Part } from '../../part.js';
 import { ITitleService } from '../../../services/title/browser/titleService.js';
 import { getWCOTitlebarAreaRect, getZoomFactor, isWCOEnabled } from '../../../../base/browser/browser.js';
-import { MenuBarVisibility, getTitleBarStyle, getMenuBarVisibility, hasCustomTitlebar, hasNativeTitlebar, DEFAULT_CUSTOM_TITLEBAR_HEIGHT, getWindowControlsStyle, WindowControlsStyle, TitlebarStyle, MenuSettings, hasNativeMenu } from '../../../../platform/window/common/window.js';
+import { MenuBarVisibility, getTitleBarStyle, hasCustomTitlebar, hasNativeTitlebar, DEFAULT_CUSTOM_TITLEBAR_HEIGHT, getWindowControlsStyle, WindowControlsStyle, TitlebarStyle, MenuSettings, hasNativeMenu } from '../../../../platform/window/common/window.js';
 import { IContextMenuService } from '../../../../platform/contextview/browser/contextView.js';
 import { StandardMouseEvent } from '../../../../base/browser/mouseEvent.js';
 import { IConfigurationService, IConfigurationChangeEvent } from '../../../../platform/configuration/common/configuration.js';
@@ -605,7 +605,15 @@ export class BrowserTitlebarPart extends Part implements ITitlebarPart {
 		}
 
 		// Check extensions
-		return createActionViewItem(this.instantiationService, action, { ...options, menuAsChild: false });
+		const item = createActionViewItem(this.instantiationService, action, { ...options, menuAsChild: false });
+		if (item && action.id === 'workbench.action.toggleAuxiliaryBar') {
+			const originalRender = item.render.bind(item);
+			item.render = (container: HTMLElement) => {
+				originalRender(container);
+				container.classList.add('bot-icon-action');
+			};
+		}
+		return item;
 	}
 
 	private getKeybinding(action: IAction): ResolvedKeybinding | undefined {
@@ -800,11 +808,11 @@ export class BrowserTitlebarPart extends Part implements ITitlebarPart {
 			return 'hidden';
 		}
 
-		return getMenuBarVisibility(this.configurationService);
+		return 'classic';
 	}
 
 	private get layoutControlEnabled(): boolean {
-		return this.configurationService.getValue<boolean>(LayoutSettings.LAYOUT_ACTIONS) !== false;
+		return false;
 	}
 
 	protected get isCommandCenterVisible() {

@@ -11,6 +11,7 @@ import { registerIcon } from '../../../../platform/theme/common/iconRegistry.js'
 import { Categories } from '../../../../platform/action/common/actionCommonCategories.js';
 import { alert } from '../../../../base/browser/ui/aria/aria.js';
 import { AuxiliaryBarMaximizedContext, AuxiliaryBarVisibleContext, IsAuxiliaryWindowContext } from '../../../common/contextkeys.js';
+import { AppResourcePath, FileAccess } from '../../../../base/common/network.js';
 import { ViewContainerLocation, ViewContainerLocationToString } from '../../../common/views.js';
 import { ActivityBarPosition, IWorkbenchLayoutService, LayoutSettings, Parts } from '../../../services/layout/browser/layoutService.js';
 import { IPaneCompositePartService } from '../../../services/panecomposite/browser/panecomposite.js';
@@ -23,10 +24,8 @@ import { closeIcon as panelCloseIcon } from '../panel/panelActions.js';
 const maximizeIcon = registerIcon('auxiliarybar-maximize', Codicon.screenFull, localize('maximizeIcon', 'Icon to maximize the secondary side bar.'));
 const closeIcon = registerIcon('auxiliarybar-close', panelCloseIcon, localize('closeIcon', 'Icon to close the secondary side bar.'));
 
-const auxiliaryBarRightIcon = registerIcon('auxiliarybar-right-layout-icon', Codicon.layoutSidebarRight, localize('toggleAuxiliaryIconRight', 'Icon to toggle the secondary side bar off in its right position.'));
-const auxiliaryBarRightOffIcon = registerIcon('auxiliarybar-right-off-layout-icon', Codicon.layoutSidebarRightOff, localize('toggleAuxiliaryIconRightOn', 'Icon to toggle the secondary side bar on in its right position.'));
-const auxiliaryBarLeftIcon = registerIcon('auxiliarybar-left-layout-icon', Codicon.layoutSidebarLeft, localize('toggleAuxiliaryIconLeft', 'Icon to toggle the secondary side bar in its left position.'));
-const auxiliaryBarLeftOffIcon = registerIcon('auxiliarybar-left-off-layout-icon', Codicon.layoutSidebarLeftOff, localize('toggleAuxiliaryIconLeftOn', 'Icon to toggle the secondary side bar on in its left position.'));
+const aiIconUri = FileAccess.asBrowserUri('Aibot.png' as AppResourcePath);
+const aiIcon = { dark: aiIconUri, light: aiIconUri };
 
 export class ToggleAuxiliaryBarAction extends Action2 {
 
@@ -147,8 +146,8 @@ MenuRegistry.appendMenuItems([
 			command: {
 				id: ToggleAuxiliaryBarAction.ID,
 				title: localize('toggleSecondarySideBar', "Toggle Secondary Side Bar"),
-				toggled: { condition: AuxiliaryBarVisibleContext, icon: auxiliaryBarLeftIcon },
-				icon: auxiliaryBarLeftOffIcon,
+				toggled: { condition: AuxiliaryBarVisibleContext, icon: aiIcon },
+				icon: aiIcon,
 			},
 			when: ContextKeyExpr.and(
 				IsAuxiliaryWindowContext.negate(),
@@ -166,8 +165,8 @@ MenuRegistry.appendMenuItems([
 			command: {
 				id: ToggleAuxiliaryBarAction.ID,
 				title: localize('toggleSecondarySideBar', "Toggle Secondary Side Bar"),
-				toggled: { condition: AuxiliaryBarVisibleContext, icon: auxiliaryBarRightIcon },
-				icon: auxiliaryBarRightOffIcon,
+				toggled: { condition: AuxiliaryBarVisibleContext, icon: aiIcon },
+				icon: aiIcon,
 			},
 			when: ContextKeyExpr.and(
 				IsAuxiliaryWindowContext.negate(),

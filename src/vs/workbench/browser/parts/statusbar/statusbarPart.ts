@@ -435,6 +435,15 @@ class StatusbarPart extends Part implements IStatusbarEntryContainer {
 		// Add items in order according to alignment
 		this.appendStatusbarEntries();
 
+
+		// Inject Custom TCS Item
+		this.addEntry({
+			name: 'TCS AI',
+			text: 'TCSCode - Powered by AI',
+			ariaLabel: 'TCSCode - Powered by AI',
+			tooltip: 'TCSCode - Powered by AI',
+		}, 'tcs.poweredByAI', StatusbarAlignment.RIGHT, Number.NEGATIVE_INFINITY);
+
 		// Fill in pending entries if any
 		while (this.pendingEntries.length) {
 			const pending = this.pendingEntries.shift();

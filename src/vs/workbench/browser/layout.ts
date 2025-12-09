@@ -1142,6 +1142,7 @@ export abstract class Layout extends Disposable implements IWorkbenchLayoutServi
 
 	registerPart(part: Part): IDisposable {
 		const id = part.getId();
+		console.log(`Registering part: ${id}`);
 		this.parts.set(id, part);
 
 		return toDisposable(() => this.parts.delete(id));
@@ -1150,6 +1151,7 @@ export abstract class Layout extends Disposable implements IWorkbenchLayoutServi
 	protected getPart(key: Parts): Part {
 		const part = this.parts.get(key);
 		if (!part) {
+			console.error(`Unknown part requested: ${key}. Available parts: ${Array.from(this.parts.keys()).join(', ')}`);
 			throw new Error(`Unknown part ${key}`);
 		}
 
