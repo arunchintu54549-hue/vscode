@@ -10,7 +10,7 @@ if "%VSCODE_SKIP_PRELAUNCH%"=="" (
 	node build/lib/preLaunch.ts
 )
 
-set CODE=".build\electron\Code - OSS.exe"
+set CODE=".build\electron\TCS Code.exe"
 
 :: Manage built-in extensions
 if "%~1"=="--builtin" goto builtin
