@@ -247,6 +247,9 @@ import './contrib/sash/browser/sash.contribution.js';
 // SCM
 import './contrib/scm/browser/scm.contribution.js';
 
+// GitHub
+import './contrib/github/browser/github.contribution.js';
+
 // Debug
 import './contrib/debug/browser/debug.contribution.js';
 import './contrib/debug/browser/debugEditorContribution.js';

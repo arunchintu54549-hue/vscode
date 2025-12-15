@@ -238,6 +238,15 @@ MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
 
 MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
 	command: {
+		id: 'workbench.action.toggleSidebarVisibility',
+		title: localize('toggleSideBar', "Toggle Primary Side Bar"),
+		icon: Codicon.layoutSidebarLeft,
+	},
+	order: 101.5,
+});
+
+MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
+	command: {
 		id: 'workbench.action.terminal.toggleTerminal',
 		title: localize('toggleTerminal', "Toggle Terminal"),
 		icon: Codicon.terminal,
@@ -245,11 +254,4 @@ MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
 	order: 102,
 });
 
-MenuRegistry.appendMenuItem(MenuId.CommandCenter, {
-	command: {
-		id: 'workbench.action.openWalkthrough',
-		title: localize('help', "Help"),
-		icon: Codicon.question,
-	},
-	order: 103,
-});
+
