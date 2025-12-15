@@ -5,11 +5,13 @@
 
 import { localize, localize2 } from '../../../../nls.js';
 import { Registry } from '../../../../platform/registry/common/platform.js';
-import { Extensions as ViewContainerExtensions, IViewContainersRegistry, ViewContainerLocation, IViewsRegistry } from '../../../common/views.js';
+import { Extensions as ViewContainerExtensions, IViewContainersRegistry, ViewContainerLocation, IViewsRegistry, ViewContentGroups } from '../../../common/views.js';
 import { SyncDescriptor } from '../../../../platform/instantiation/common/descriptors.js';
 import { Codicon } from '../../../../base/common/codicons.js';
 import { registerIcon } from '../../../../platform/theme/common/iconRegistry.js';
+import { GitHubViewPane } from './githubViewPane.js';
 import { GitHubViewPaneContainer } from './githubViewPaneContainer.js';
+import { ContextKeyExpr } from '../../../../platform/contextkey/common/contextkey.js';
 import { KeyMod, KeyCode } from '../../../../base/common/keyCodes.js';
 
 const GITHUB_VIEWLET_ID = 'workbench.view.github';
@@ -23,27 +25,36 @@ const viewContainer = Registry.as<IViewContainersRegistry>(ViewContainerExtensio
 	storageId: 'workbench.github.views.state',
 	icon: githubViewIcon,
 	alwaysUseContainerInfo: true,
-	order: 5, // Extensions is 4, so this is beside it.
+	order: 6, // Remote is 5, Extensions is 4.
 	openCommandActionDescriptor: {
 		id: GITHUB_VIEWLET_ID,
 		mnemonicTitle: localize('githubMnemonic', "GitHub"),
 		keybindings: {
 			primary: KeyMod.CtrlCmd | KeyMod.Shift | KeyCode.KeyI, // Using 'I' for Integration or somesuch freely available key, avoiding conflict
 		},
-		order: 5,
+		order: 6,
 	}
 }, ViewContainerLocation.Sidebar);
 
 const viewsRegistry = Registry.as<IViewsRegistry>(ViewContainerExtensions.ViewsRegistry);
 
-// Register a default view so it isn't empty and hidden
+// Register a default view with GitHubViewPane
+const githubViewId = 'workbench.github.welcome';
 viewsRegistry.registerViews([{
-	id: 'workbench.github.welcome',
+	id: githubViewId,
 	name: localize2('githubWelcome', "Welcome to GitHub"),
 	containerTitle: localize('githubContainer', "GitHub"),
-	ctorDescriptor: new SyncDescriptor(GitHubViewPaneContainer), // Re-using container as view for now, effectively empty but present
+	ctorDescriptor: new SyncDescriptor(GitHubViewPane),
 	canToggleVisibility: true,
 	hideByDefault: false,
 	workspace: true,
 	order: 1
 }], viewContainer);
+
+// Register Welcome Content
+viewsRegistry.registerViewWelcomeContent(githubViewId, {
+	content: localize('noWorkspaceHelp', "You have not opened a folder.\n[Open Folder](command:workbench.action.files.openFolder)"),
+	when: ContextKeyExpr.equals('workspaceFolderCount', 0),
+	group: ViewContentGroups.Open,
+	order: 1
+});

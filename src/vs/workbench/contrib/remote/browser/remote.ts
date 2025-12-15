@@ -634,7 +634,7 @@ Registry.as<IViewContainersRegistry>(Extensions.ViewContainersRegistry).register
 		id: VIEWLET_ID,
 		title: nls.localize2('remote.explorer', "Remote Explorer"),
 		ctorDescriptor: new SyncDescriptor(RemoteViewPaneContainer),
-		hideIfEmpty: true,
+		hideIfEmpty: false,
 		viewOrderDelegate: {
 			getOrder: (group?: string) => {
 				if (!group) {
@@ -661,7 +661,7 @@ Registry.as<IViewContainersRegistry>(Extensions.ViewContainersRegistry).register
 			}
 		},
 		icon: icons.remoteExplorerViewIcon,
-		order: 4
+		order: 5
 	}, ViewContainerLocation.Sidebar);
 
 export class RemoteMarkers implements IWorkbenchContribution {
